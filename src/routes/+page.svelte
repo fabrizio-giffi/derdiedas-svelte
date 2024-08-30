@@ -1,4 +1,7 @@
 <script>
+	/** @type {import('./$types').PageData} */
+	export let data;
+
 	import capitalize from 'capitalize';
 
 	const GENDERMAP = {
@@ -10,6 +13,7 @@
 	$: qWord = '';
 	$: gender = '';
 	$: errMsg = '';
+	$: show = 'hidden';
 
 	async function search(event) {
 		// Reset states
@@ -103,3 +107,44 @@
 		</div>
 	</section>
 {/if}
+
+<section
+	on:mouseenter={() => (show = 'grid')}
+	on:mouseleave={() => (show = 'hidden')}
+	role="presentation"
+	class="absolute bottom-0 left-1/4 right-1/4 py-4 px-6 border-x border-t border-white rounded-t-md"
+>
+	<h3 class={"text-2xl text-center mb-3"}>Usual suspects</h3>
+	<div class={`${show} grid-cols-3 justify-items-center`}>
+		<div>
+			<h4 class="text-xl font-bold">Maskulin</h4>
+			<ul>
+				{#each data.m as entry}
+					<li>
+						{entry}
+					</li>
+				{/each}
+			</ul>
+		</div>
+		<div>
+			<h4 class="text-xl font-bold">Feminin</h4>
+			<ul>
+				{#each data.f as entry}
+					<li>
+						{entry}
+					</li>
+				{/each}
+			</ul>
+		</div>
+		<div>
+			<h4 class="text-xl font-bold">Neutral</h4>
+			<ul>
+				{#each data.n as entry}
+					<li>
+						{entry}
+					</li>
+				{/each}
+			</ul>
+		</div>
+	</div>
+</section>
